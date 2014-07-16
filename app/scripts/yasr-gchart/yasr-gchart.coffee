@@ -14,6 +14,7 @@ YASR.plugins.gchart = (yasr, parent, options) ->
 				else return "string"
 		else return "string"
 	castGoogleType = (binding) ->
+		if (!binding?) then return null
 		if (binding.type? && (binding.type == 'typed-literal' || binding.type == 'literal'))
 			switch (binding.datatype)
 				when "http://www.w3.org/2001/XMLSchema#float", "http://www.w3.org/2001/XMLSchema#decimal", "http://www.w3.org/2001/XMLSchema#int", "http://www.w3.org/2001/XMLSchema#integer", "http://www.w3.org/2001/XMLSchema#long", "http://www.w3.org/2001/XMLSchema#gYearMonth", "http://www.w3.org/2001/XMLSchema#gYear", "http://www.w3.org/2001/XMLSchema#gMonthDay", "http://www.w3.org/2001/XMLSchema#gDay", "http://www.w3.org/2001/XMLSchema#gMonth" then return Number(binding.value)
