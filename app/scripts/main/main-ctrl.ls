@@ -1,15 +1,22 @@
 "use strict"
-angular.module("visu").controller("MainCtrl", ($http,$scope,$localStorage,$state,$stateParams) ->
+angular.module("app").controller("MainCtrl", ($window,$http,$scope,$localStorage,$state,$stateParams) ->
 	if ($stateParams.sparqlEndpoint?) then $localStorage.sparqlEndpoint=$stateParams.sparqlEndpoint
 	if ($localStorage.sparqlEndpoint?) then $scope.sparqlEndpoint=$localStorage.sparqlEndpoint
-	$scope.shareLink = () -> 
-		$state.go(".",
+	$scope.shareLink = !-> 
+		url = $state.href(".",
 			sparqlEndpoint : $scope.sparqlEndpoint
-			query : yasqe.getValue()
+			query : yasqe.getValue!
 			outputType : yasr.options.output
 			chartConfig : yasr.options.gchart.chartConfig
 			motionChartState : yasr.options.gchart.motionChartState
-		)
+		, absolute : true)
+		$scope.shareLinkLoading = true
+		response <-! $http.post('https://www.googleapis.com/urlshortener/v1/url', 
+			key : "AIzaSyDtS96pmj2IeRdw81zobVDpCfs0rFphHvc"
+			longUrl : url
+		).then(_,!->$scope.shareLinkLoading=false;$window.prompt('Copy to clipboard with Ctrl/Cmd-C',url))
+		$scope.shareLinkLoading = false
+		$window.prompt('Copy to clipboard with Ctrl/Cmd-C',response.data.id)
 	yasqe = YASQE(document.getElementById("yasqe"), {
 		createShareLink: false
 		sparql: {
@@ -20,16 +27,16 @@ angular.module("visu").controller("MainCtrl", ($http,$scope,$localStorage,$state
 	})
 	if $stateParams.query? then yasqe.setValue($stateParams.query)
 	$scope.sparqlEndpointInputValid = true
-	$scope.$watch('sparqlEndpoint',(newValue,oldValue) -> 
+	$scope.$watch('sparqlEndpoint',(newValue,oldValue) !-> 
 		if (newValue?)
 			$http({
 				method: "GET",
 				url : newValue,
 				params: { query:"ASK {}" },
 				headers: { 'Accept' : 'application/sparql-results+json' }
-			}).success((data) ->
+			}).success((data) !->
 				$scope.sparqlEndpointInputValid = data.boolean?
-			).error(() ->
+			).error(!->
 				$scope.sparqlEndpointInputValid = false
 			)
 		if (newValue!=oldValue)
@@ -49,6 +56,7 @@ angular.module("visu").controller("MainCtrl", ($http,$scope,$localStorage,$state
 			motionChartState : $stateParams.motionChartState 
 		}
 	})
+	yasr.yasqe = yasqe
 	yasr.options.persistency.outputSelector = "visu"
 	yasqe.options.sparql.handlers.success = (data, textStatus, xhr) ->
 		yasr.setResponse({response: data, contentType: xhr.getResponseHeader("Content-Type")})
@@ -57,5 +65,5 @@ angular.module("visu").controller("MainCtrl", ($http,$scope,$localStorage,$state
 		if (errorThrown && errorThrown.length) then exceptionMsg += ": " + errorThrown
 		yasr.setResponse({exception: exceptionMsg})
 	if ($stateParams.sparqlEndpoint? && $stateParams.query?)
-		yasqe.query()
+		yasqe.query!
 )

@@ -2,7 +2,7 @@
   .column
     h1.ui.header.center.aligned (Visual) SPARQL query tool
     #shareicondiv
-        i#shareicon.share.icon(ng-click="shareLink()")
+        i#shareicon.icon(ng-click="shareLink()",ng-class="shareLinkLoading ? 'loading' : 'share'")
     div.ui.form
         div.field(ng-class="{ 'error': !sparqlEndpointInputValid }")
             label SPARQL endpoint

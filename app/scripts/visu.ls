@@ -1,5 +1,5 @@
 "use strict"
-angular.module("visu", [
+angular.module("app", [
   "ui.router"
   "ngStorage"
 ]).config ($stateProvider, $urlRouterProvider) ->

@@ -18,7 +18,7 @@ html(lang="en")
 
     title visu
     
-  body(ng-app="visu")
+  body(ng-app="app")
     main(ui-view="")
     script(src="https://www.google.com/jsapi")
     script(type="text/javascript").
@@ -36,6 +36,7 @@ html(lang="en")
 
     // build:js(.tmp) scripts/main.js
     script(src="scripts/yasr-gchart/yasr-gchart.js")
+    script(src="scripts/yasr-kml/yasr-kml.js")
     script(src="scripts/visu.js")
     script(src="scripts/main/main-ctrl.js")
     // inject:partials
