@@ -1,4 +1,3 @@
-'use strict'
 YASR.plugins.gchart = (yasr, parent, options) ->
 	id = yasr.container.closest('[id]').attr('id')
 	if (!yasr.options.gchart?) then yasr.options.gchart = {}
