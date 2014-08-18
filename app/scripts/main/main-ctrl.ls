@@ -1,15 +1,15 @@
 "use strict"
-angular.module("app").controller("MainCtrl", ($window,$http,$scope,$localStorage,$state,$stateParams) ->
+angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$localStorage,$state,$stateParams) ->
 	if ($stateParams.sparqlEndpoint?) then $localStorage.sparqlEndpoint=$stateParams.sparqlEndpoint
 	if ($localStorage.sparqlEndpoint?) then $scope.sparqlEndpoint=$localStorage.sparqlEndpoint
 	$scope.shareLink = !-> 
-		url = $state.href(".",
+		url = $location.absUrl().substring(0,$location.absUrl().indexOf('#')) + $state.href(".",
 			sparqlEndpoint : $scope.sparqlEndpoint
 			query : yasqe.getValue!
 			outputType : yasr.options.output
 			chartConfig : yasr.options.gchart.chartConfig
 			motionChartState : yasr.options.gchart.motionChartState
-		, absolute : true)
+		)
 		$scope.shareLinkLoading = true
 		response <-! $http.post('https://www.googleapis.com/urlshortener/v1/url', 
 			key : "AIzaSyDtS96pmj2IeRdw81zobVDpCfs0rFphHvc"
