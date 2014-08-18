@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <script>document.write('<base href="' + document.location + '" />');</script>
     <link rel="stylesheet" href="styles/vendor-dfc31381.css">
     <link rel="stylesheet" href="styles/main-6460ebcc.css">
     <title>visu</title>
   </head>
-  <body ng-app="app">
+  <body>
     <main ui-view=""></main>
     <script src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">google.load('visualization', '1.0', {'packages':['corechart','annotationchart','calendar','gauge','geochart','map','orgchart','sankey','table','timeline','treemap','charteditor']});</script>
