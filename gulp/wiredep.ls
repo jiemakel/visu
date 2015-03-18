@@ -1,6 +1,6 @@
 require! gulp
-$ = require("gulp-load-plugins")!
-wiredep = require("wiredep").stream
+$ = require(\gulp-load-plugins)!
+wiredep = require(\wiredep).stream
 
 gulp.task \wiredep:styles, ->
 	gulp.src("app/styles/*.styl")

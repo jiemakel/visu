@@ -1,5 +1,5 @@
 require! gulp
-$ = require("gulp-load-plugins")!
+$ = require(\gulp-load-plugins)!
 
 gulp.task \deploy, <[dist]>, ->
 	gulp.src("./dist/**/*")
