@@ -52,15 +52,17 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
     }
     # this way, the URLs in the results are prettified using the defined prefixes in the query
     getUsedPrefixes: yasqe.getPrefixesFromQuery
-    output: $stateParams.outputType ? undefined
-    gchart: {
-      chartConfig : $stateParams.chartConfig
-      motionChartState : $stateParams.motionChartState
-    }
   })
+  # stupid yasr persistence
+  if $stateParams.outputType?
+    yasr.options.output = $stateParams.outputType
+    yasr.header.find("button.selected").removeClass("selected")
+    yasr.header.find("button.select_#{$stateParams.outputType}").addClass("selected")
+  # legacy support
   if $location.search!['chartConfig']?
-    $location.search('gchart',JSON.stringify({chartConfig:JSON.parse($location.search!.chartConfig),motionChartState: if $location.search!.motionChartState then JSON.parse($location.search!.motionChartState) else void}))
+    $location.search('gchart',JSON.stringify({chartConfig:JSON.parse($location.search!.chartConfig),motionChartState: if $location.search!.motionChartState then $location.search!.motionChartState else void}))
     $location.search('chartConfig',void)
+    $location.search('motionChartState',void)
   for pname,plugin of yasr.plugins when plugin.setPersistentSettings?
     if ($location.search![pname]) then plugin.setPersistentSettings(JSON.parse($location.search![pname]))
   yasr.yasqe = yasqe
