@@ -34,6 +34,8 @@ gulp.task \dist:html, <[dist:partials]>, ->
     .pipe($.uglify(preserveComments: uglifySaveLicense))
     .pipe(jsFilter.restore!)
     .pipe(cssFilter)
+    .pipe($.replace(/url\(".*?\/(\w+\.(eot|svg|ttf|woff|woff2).*?)"\)/g,'url("fonts/$1")'))
+    .pipe($.replace(/url\(".*?\/(\w+?\.(png|jpg))"\)/g,'url("images/$1")'))
     .pipe($.csso!)
     .pipe(cssFilter.restore!)
     .pipe(assets.restore!)
@@ -53,13 +55,26 @@ gulp.task \dist:images, ->
     .pipe($.size!)
     .pipe(gulp.dest("dist/images"))
 
-gulp.task \dist:fonts, ->
+gulp.task \dist:cssimages, ->
   gulp.src(mainBowerFiles!)
     .pipe($.plumber(errorHandler: $.notify.onError("<%= error.stack %>")))
-    .pipe($.filter("**/*.{eot,svg,ttf,woff}"))
+    .pipe($.filter("**/*.{png,jpg}"))
+    .pipe($.cache($.imagemin(
+      optimizationLevel: 3
+      progressive: true
+      interlaced: true
+    )))
+    .pipe($.size!)
+    .pipe(gulp.dest("dist/styles/images"))
+
+
+gulp.task \dist:cssfonts, ->
+  gulp.src(mainBowerFiles!)
+    .pipe($.plumber(errorHandler: $.notify.onError("<%= error.stack %>")))
+    .pipe($.filter("**/*.{eot,svg,ttf,woff,woff2}"))
     .pipe($.flatten!)
     .pipe($.size!)
-    .pipe(gulp.dest("dist/fonts"))
+    .pipe(gulp.dest("dist/styles/fonts"))
 
 gulp.task \dist, (cb) ->
-  require("run-sequence") \build, <[dist:html dist:images dist:fonts]>, cb
+  require("run-sequence") \build, <[dist:html dist:cssimages dist:images dist:cssfonts]>, cb
