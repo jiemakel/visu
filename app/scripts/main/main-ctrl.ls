@@ -3,18 +3,17 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
   if ($stateParams.sparqlEndpoint?) then $localStorage.sparqlEndpoint=$stateParams.sparqlEndpoint
   if ($localStorage.sparqlEndpoint?) then $scope.sparqlEndpoint=$localStorage.sparqlEndpoint
   $scope.shareLink = !->
-    url = $location.absUrl().substring(0,$location.absUrl().indexOf('#')) + $state.href(".",
-      sparqlEndpoint : $scope.sparqlEndpoint
-      query : yasqe.getValue!
-      outputType : yasr.options.output
-      chartConfig : yasr.options.gchart.chartConfig
-      motionChartState : yasr.options.gchart.motionChartState
-    )
+    $location.search('sparqlEndpoint',$scope.sparqlEndpoint)
+    $location.search('query',yasqe.getValue!)
+    $location.search('outputType',yasr.options.output)
+    for pname,plugin of yasr.plugins when plugin.getPersistentSettings?
+      $location.search(pname,JSON.stringify(plugin.getPersistentSettings!))
+    url = $location.absUrl!
     $scope.shareLinkLoading = true
-    response <-! $http.post('https://www.googleapis.com/urlshortener/v1/url',
-      key : "AIzaSyDtS96pmj2IeRdw81zobVDpCfs0rFphHvc"
+    response <-! $http.post('https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDtS96pmj2IeRdw81zobVDpCfs0rFphHvc',
       longUrl : url
-    ).then(_,!->$scope.shareLinkLoading=false;$window.prompt('Copy to clipboard with Ctrl/Cmd-C',url))
+    ).then(_,!->
+      $scope.shareLinkLoading=false;$window.alert('URL updated, copy it from the browser address bar'))
     $scope.shareLinkLoading = false
     $window.prompt('Copy to clipboard with Ctrl/Cmd-C',response.data.id)
   yasqe = YASQE(document.getElementById("yasqe"),
@@ -59,6 +58,11 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
       motionChartState : $stateParams.motionChartState
     }
   })
+  if $location.search!['chartConfig']?
+    $location.search('gchart',JSON.stringify({chartConfig:JSON.parse($location.search!.chartConfig),motionChartState: if $location.search!.motionChartState then JSON.parse($location.search!.motionChartState) else void}))
+    $location.search('chartConfig',void)
+  for pname,plugin of yasr.plugins when plugin.setPersistentSettings?
+    if ($location.search![pname]) then plugin.setPersistentSettings(JSON.parse($location.search![pname]))
   yasr.yasqe = yasqe
   yasr.options.persistency.outputSelector = "visu"
   yasqe.options.sparql.handlers.success = (data, textStatus, xhr) ->

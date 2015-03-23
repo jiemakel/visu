@@ -4,7 +4,7 @@ angular.module("app", [
   "ngStorage"
 ]).config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "home",
-    url: "/?sparqlEndpoint&query&outputType&chartConfig&motionChartState"
+    url: "/?sparqlEndpoint&query&outputType"
     templateUrl: "partials/main.html"
     controller: "MainCtrl"
   $urlRouterProvider.otherwise "/"
