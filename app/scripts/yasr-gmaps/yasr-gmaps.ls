@@ -1,10 +1,9 @@
 YASR.plugins.gmaps = (yasr) ->
-  id = yasr.container.closest('[id]').attr('id')
   {
     yasr : yasr
     name : "Google Maps"
     hideFromSelection : false
-    priority : 1
+    priority : 2
     canHandleResults : (yasr) ->
       yasr.results && yasr.results.getVariables && yasr.results.getVariables() && 'lat' in yasr.results.getVariables() && 'lon' in yasr.results.getVariables()
     draw : !->

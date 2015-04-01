@@ -1,0 +1,8 @@
+script(type="text/ng-template",id="templates/dimensions.html")
+  ul.list-unstyled.dimensions-list
+    | {{metadata}}
+    li.dimension(data-index='{{$index}}', data-dimension='{{dimension}}', ng-repeat='dimension in metadata')
+      | {{ dimension.key }}
+      span.dimension-type {{dimension.type}}
+      span.dimension-icon.pull-right
+        i.fa.fa-bars

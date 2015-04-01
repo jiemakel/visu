@@ -1,10 +1,9 @@
 YASR.plugins.kml = (yasr) ->
-  id = yasr.container.closest('[id]').attr('id')
   {
     yasr : yasr
     name : "KML"
     hideFromSelection : false
-    priority : 1
+    priority : 3
     canHandleResults : (yasr) -> yasr.results && yasr.results.getVariables && yasr.results.getVariables! && 'coordinates' in yasr.results.getVariables!
     draw : !->
       endpoint = yasr.yasqe.getOption('sparql').endpoint

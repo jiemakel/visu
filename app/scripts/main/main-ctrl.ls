@@ -1,4 +1,3 @@
-"use strict"
 angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$localStorage,$state,$stateParams,$q) ->
   if ($stateParams.sparqlEndpoint?) then $localStorage.sparqlEndpoint=$stateParams.sparqlEndpoint
   if ($localStorage.sparqlEndpoint?) then $scope.sparqlEndpoint=$localStorage.sparqlEndpoint

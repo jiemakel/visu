@@ -1,0 +1,93 @@
+div
+  include colors.jade
+  include dimensions.jade
+  section(data-ng-show='!error && data.length')
+    h3#layout
+      | Choose a Chart
+    .row
+      .col-lg-3.col-md-3
+        .chart-description
+          h4 {{chart.title()}}
+          hr
+          p.light(ng-bind-html='chart.description() | to_trusted')
+          p.light(data-ng-show='!chart.description()') No description given
+      .col-lg-9.col-md-9
+        .row(group='', every='3', watch='charts')
+          .col-lg-4.col-md-4(ng-repeat='c in charts track by $index')
+            .layout(ng-class='{selected: c == chart}', ng-click='selectChart(c)')
+              .layout-thumb(ng-style="{'background-image':'url(bower_components/raw/' + c.thumbnail() + ')'}")
+              p.layout-inner
+                span.layout-title {{c.title()}}
+                i.fa.fa-check.pull-right(data-ng-show='c==chart')
+  section.dark(data-ng-show='!error && data.length')
+    #mapping.row-fluid
+      div
+        h3
+          | Map your dimensions
+          a.pull-right.light(data-toggle='tooltip', data-title='Clear all', ng-click='model.clear()')
+            i.fa.fa-trash-o
+          span.clearfix
+      .row
+        .col-lg-3.col-md-3
+          div(draggable='')
+            ul.list-unstyled.dimensions-list
+              li.dimension(data-dimension='{{dimension}}', ng-repeat='dimension in metadata track by $index')
+                span.dimension-key {{ dimension.key }}
+                span.dimension-type {{dimension.type}}
+                span.dimension-icon.pull-right
+                  i.fa.fa-bars
+        .col-lg-9.col-md-9
+          .sticky
+            .row(group='', every='3', watch='model')
+              .col-lg-4.col-md-4.dimensions-wrapper(ng-repeat='dimension in model.dimensions().values() track by $index', ng-init='open=false')
+                .dimensions-model
+                  .dimension-multiple
+                    i.fa.fa-tag(data-toggle='tooltip', data-title='Single dimension', data-ng-show='!dimension.multiple()')
+                    i.fa.fa-tags(data-toggle='tooltip', data-title='Multiple dimension', data-ng-show='dimension.multiple()')
+                  a.dimension-info(data-toggle='tooltip', data-title='Show description', ng-click='open = !open', ng-show='dimension.description()')
+                    // <i class="fa fa-info dimension-info-toggle"></i>
+                  p.dimension-title {{dimension.title()}}
+                  ul.dimensions-container.list-unstyled(sortable='', title='dimension.title()', value='dimension.value', multiple='dimension.multiple()', types='dimension.types()')
+                  // <div class="dimension-description" ng-class="{open: open}">{{dimension.description()}}</div>
+  section(data-ng-show='!error && data.length')
+    h3#options Customize your Visualization
+    .row
+      .col-lg-3
+        ul.list-unstyled
+          li(ng-repeat='option in chart.options() track by $index', chart-option='')
+            p.option-title
+              | {{option.title()}}
+              a.option-fit.pull-right(data-ng-show='option.fitToWidth()', data-toggle='tooltip', data-title='Fit to width')
+                i.fa.fa-expand
+            div(ng-switch='', on='option.type()')
+              input.form-control(type='number', min='0', ng-model='option.value', ng-switch-when='number')
+              div(ng-switch-when='checkbox')
+                label.checkbox
+                  input(type='checkbox', ng-model='option.value')
+              div(colors='option.value', ng-switch-when='color')
+              button.btn.btn-default(type='button', ng-model='option.value', ng-change='$apply()', ng-options='opt for opt in option.values()', bs-select='', ng-switch-when='list')
+                | Action
+                span.caret
+              input.form-control(type='text', min='0', ng-model='option.value', ng-switch-default='ng-switch-default')
+      .col-lg-9
+        .chart-resize
+          #chart(ng-show='!isEmpty()', chart='')
+          p.light(ng-show='isEmpty()')
+            i.fa.fa-hand-o-up.breath-right
+            |  Map your dimensions in the panels above to build the visualization
+  section.dark(ng-show='!isEmpty()', style='padding-bottom:50px')
+    #export.row
+      .col-lg-3
+        h3
+          i.fa.fa-arrow-circle-o-down.breath-right
+          | Download
+        downloader
+      .col-lg-9
+        h3#data
+          i.fa.fa-code.breath-right
+          | Embed Code
+        coder
+        p.light
+          | Copy the code above into your HTML to embed the visualization
+          a#copy-button.pull-right(copy-button='', data-clipboard-target='source', data-container='body')
+            i.fa.fa-clipboard

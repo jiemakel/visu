@@ -2,6 +2,15 @@
 angular.module("app", [
   "ui.router"
   "ngStorage"
+  'ngRoute',
+  'ngAnimate',
+  'ngSanitize',
+  'raw.services',
+  'raw.directives',
+  'raw.controllers',
+  'mgcrea.ngStrap',
+  'ui',
+  'colorpicker.module'
 ]).config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "home",
     url: "/?sparqlEndpoint&query&outputType"

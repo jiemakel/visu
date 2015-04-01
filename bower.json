@@ -5,12 +5,17 @@
     "angular": "latest",
     "jquery": "latest",
     "angular-ui-router": "latest",
+    "angular-animate": "latest",
     "semantic-ui": "latest",
     "ngstorage": "latest",
     "yasqe": "YASGUI/YASQE",
-    "yasr": "YASGUI/YASR"
+    "yasr": "YASGUI/YASR",
+    "raw": "densitydesign/raw"
   },
   "devDependencies": {
     "angular-mocks": "latest"
+  },
+  "resolutions": {
+    "angular-animate": "~1.3.15"
   }
 }
