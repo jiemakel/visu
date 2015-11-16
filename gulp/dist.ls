@@ -15,8 +15,8 @@ gulp.task \dist:partials, ->
     .pipe(gulp.dest(".tmp/partials"))
 
 gulp.task \dist:html, <[dist:partials]>, ->
-  jsFilter = $.filter("**/*.js")
-  cssFilter = $.filter("**/*.css")
+  jsFilter = $.filter("**/*.js", {restore:true})
+  cssFilter = $.filter("**/*.css", {restore:true})
   assets = $.useref.assets!
   gulp.src(".tmp/*.html")
     .pipe($.plumber(errorHandler: $.notify.onError("<%= error.stack %>")))
@@ -38,7 +38,7 @@ gulp.task \dist:html, <[dist:partials]>, ->
     .pipe($.uglify(preserveComments: uglifySaveLicense))
     .pipe($.print((path)->"dist:html-js(2) "+path))
     .pipe($.size(title:'dist:html-js(2)'))
-    .pipe(jsFilter.restore!)
+    .pipe(jsFilter.restore)
     .pipe(cssFilter)
     .pipe($.print((path)->"dist:html-css(1) "+path))
     .pipe($.size(title:'dist:html-css(1)'))
@@ -47,7 +47,7 @@ gulp.task \dist:html, <[dist:partials]>, ->
     .pipe($.minifyCss(processImport:false))
     .pipe($.print((path)->"dist:html-css(2) "+path))
     .pipe($.size(title:'dist:html-css(2)'))
-    .pipe(cssFilter.restore!)
+    .pipe(cssFilter.restore)
     .pipe(assets.restore!)
     .pipe($.useref!)
     .pipe($.revReplace!)

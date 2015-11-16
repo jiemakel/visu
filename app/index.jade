@@ -27,7 +27,7 @@ html(lang="en",ng-app="app")
   body
     main(ui-view="")
     script(src="https://www.google.com/jsapi")
-    script(src="https://maps.googleapis.com/maps/api/js?sensor=false")
+    script(src="https://maps.googleapis.com/maps/api/js")
     script(type="text/javascript").
         google.load('visualization', '1.0', {'packages':['corechart','annotationchart','calendar','gauge','geochart','map','orgchart','sankey','table','timeline','treemap','charteditor']});
     // build:js(app) scripts/vendor.js
@@ -49,10 +49,11 @@ html(lang="en",ng-app="app")
     script(src='bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.js')
     script(src='bower_components/FileSaver/FileSaver.js')
     script(src='bower_components/zeroclipboard/ZeroClipboard.js')
+    script(src='bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js')
     script(src='bower_components/codemirror/lib/codemirror.js')
     // endbower
     // kludge to make sure d3 is not overwritten
-    script YASR()
+    script YASR(null,{})
     script(src='bower_components/d3/d3.js')
     script(src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js")
     script(src="bower_components/angular-ui/build/angular-ui.min.js")
@@ -92,4 +93,3 @@ html(lang="en",ng-app="app")
     // inject:partials
     // endinject
     // endbuild
-

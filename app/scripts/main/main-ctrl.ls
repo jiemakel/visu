@@ -45,6 +45,7 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
       yasqe.getOption('sparql').endpoint = newValue
   )
   yasr = YASR(document.getElementById("yasr"), {
+    outputPlugins: ["table", "error", "boolean", "rawResponse", "pivot", "gchart", "raw", "gmaps", "kml"]
     persistency: {
       outputSelector: if $stateParams.outputType then false else "visu"
       results:false

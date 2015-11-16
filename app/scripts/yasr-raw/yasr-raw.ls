@@ -31,7 +31,7 @@ angular.module("app").run ($compile,$rootScope) !->
       draw : !->
         scope = $rootScope.$new!
         scope.lastError = 0
-        scope.text=yasr.plugins.table.getDownloadInfo!.getContent!.replace(/^ /gm,"").replace(/ ,$/gm,"").replace(/ , /g,",").replace(/"/g,"")
+        scope.text=yasr.plugins.table.getDownloadInfo!.getContent!.replace(/^ /gm,"").replace(/ ,$/gm,"").replace(/ , /g,",")
         yasr.resultsContainer.html($compile('<div ng-controller="RawCtrl"><div ng-include=\'"partials/raw.html"\'></div></div>')(scope))
         scope.$digest!
         @scope=scope.$$childHead

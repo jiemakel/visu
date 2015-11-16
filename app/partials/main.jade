@@ -9,3 +9,6 @@
             input(ng-model="sparqlEndpoint",type="text")
         div(id="yasqe")
     div(id="yasr")
+    div
+      i.help.circle.icon
+      | To use the map view, the data needs to have the variables <span class="nobr">?lat</span> and <span class="nobr">?lon</span>. In addition, <span class="nobr">?name</span> can be used to give a label to the place. To use the KML view on the other hand, the data needs a single <span class="nobr">?coordinates</span> variable with the latitude and longitude as a single comma-separated value. If you use the KML output in <a href="http://labs.europeana.eu/apps/europeana4d">Europeana4D</a>, you should probably also use at least <span class="nobr">?name</span> to give names to entities, <span class="nobr">?address</span> for place names to group by, and <span class="nobr">?when</span> to add timestamps.
