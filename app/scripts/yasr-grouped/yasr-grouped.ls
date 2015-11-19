@@ -12,7 +12,7 @@ angular.module("app").run ($compile,$rootScope) !->
         if (@scope) then @scope.selectedGrouping=@settings.selectedGrouping
       getPersistentSettings : ->
         if (!@scope) then return
-        @settings.selectedGrouping=@scope.selectedGrouping
+        @{}settings.selectedGrouping=@scope.selectedGrouping
       canHandleResults : (yasr) -> yasr.results?.getVariables?!
       draw : !->
         @scope = $rootScope.$new!
@@ -25,6 +25,12 @@ angular.module("app").run ($compile,$rootScope) !->
           for group in scope.groups then group.open=false
         scope.expandAll = !->
           for group in scope.groups then group.open=true
+        sort = !->
+          if (scope.sortByName)
+            scope.groups.sort (a,b) -> if a.name<b.name then -1 else 1
+          else
+            scope.groups.sort (a,b) -> if a.bindings.length<b.bindings.length then 1 else -1
+          scope.visibleGroups = scope.groups.slice(0,scope.visible)
         updateGroups = !->
           groups = {}
           gresMap = {}
@@ -34,12 +40,12 @@ angular.module("app").run ($compile,$rootScope) !->
             groups[binding[scope.selectedGrouping].value]=true
             gresMap.[][binding[scope.selectedGrouping].value].push(binding)
           scope.groups = [ { open:false, name:group, bindings:gresMap[group]} for group of groups ]
-          scope.groups.sort((a,b) -> a.name<b.name)
           scope.visible = 30
-          scope.visibleGroups = scope.groups.slice(0,scope.visible)
+          sort!
         @scope.availableGroupings = yasr.results.getVariables!
         @scope.selectedGrouping = @scope.availableGroupings[0]
         if (@settings?.selectedGrouping?) then @scope.selectedGrouping = @settings.selectedGrouping
+        @scope.$watch 'sortByName', !-> if (scope.groups) then sort!
         @scope.$watch 'selectedGrouping', (nv) ->
            updateGroups(nv)
         yasr.resultsContainer.html($compile('<div ng-include="\'partials/grouped.html\'"></div>')(@scope))

@@ -6,9 +6,10 @@ div(style="margin-top:1rem")
       select.form-control(ng-model="$parent.selectedGrouping",ng-options="group for group in availableGroupings")
     button.btn.btn-sm(ng-click="expandAll()"): span.glyphicon.glyphicon-plus
     button.btn.btn-sm(ng-click="collapseAll()"): span.glyphicon.glyphicon-minus
+    button.btn.btn-sm(ng-click="$parent.sortByName=!$parent.sortByName"): span.glyphicon.glyphicon-sort
   ul(infinite-scroll="scroll()",infinite-scroll-distance="2")
     li(ng-repeat="group in visibleGroups")
-      a(href="#",ng-click="group.open=!group.open") {{group.name}}
-      table.table.table-striped.table-hover.table-bordered(ng-show="group.open")
+      a(href="",ng-click="group.open=!group.open") {{group.name}} ({{group.bindings.length}})
+      table.table.table-striped.table-hover.table-bordered(ng-if="group.open")
         tr: th(ng-repeat="var in vars") {{var}}
         tr(ng-repeat="binding in group.bindings"): td(ng-repeat="var in vars") {{binding[var].value}}
