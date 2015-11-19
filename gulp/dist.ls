@@ -17,7 +17,6 @@ gulp.task \dist:partials, ->
 gulp.task \dist:html, <[dist:partials]>, ->
   jsFilter = $.filter("**/*.js", {restore:true})
   cssFilter = $.filter("**/*.css", {restore:true})
-  assets = $.useref.assets!
   gulp.src(".tmp/*.html")
     .pipe($.plumber(errorHandler: $.notify.onError("<%= error.stack %>")))
     .pipe($.print((path)->"dist:html(1) "+path))
@@ -29,7 +28,7 @@ gulp.task \dist:html, <[dist:partials]>, ->
       addRootSlash: false
       addPrefix: ".."
     ))
-    .pipe(assets)
+    .pipe($.useref!)
     .pipe($.rev!)
     .pipe(jsFilter)
     .pipe($.print((path)->"dist:html-js(1) "+path))
@@ -48,8 +47,6 @@ gulp.task \dist:html, <[dist:partials]>, ->
     .pipe($.print((path)->"dist:html-css(2) "+path))
     .pipe($.size(title:'dist:html-css(2)'))
     .pipe(cssFilter.restore)
-    .pipe(assets.restore!)
-    .pipe($.useref!)
     .pipe($.revReplace!)
     .pipe(gulp.dest("dist"))
     .pipe($.print((path)->"dist:html(2) "+path))

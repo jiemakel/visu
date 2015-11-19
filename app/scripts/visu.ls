@@ -9,6 +9,7 @@ angular.module("app", [
   'raw.directives',
   'raw.controllers',
   'mgcrea.ngStrap',
+  'infinite-scroll',
   'ui',
   'colorpicker.module'
 ]).config ($stateProvider, $urlRouterProvider) ->

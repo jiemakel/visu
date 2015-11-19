@@ -1,4 +1,4 @@
-angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$localStorage,$state,$stateParams,$q) ->
+angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$localStorage,$state,$stateParams,$q) !->
   if ($stateParams.sparqlEndpoint?) then $localStorage.sparqlEndpoint=$stateParams.sparqlEndpoint
   if ($localStorage.sparqlEndpoint?) then $scope.sparqlEndpoint=$localStorage.sparqlEndpoint
   $scope.shareLink = !->
@@ -45,7 +45,7 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
       yasqe.getOption('sparql').endpoint = newValue
   )
   yasr = YASR(document.getElementById("yasr"), {
-    outputPlugins: ["table", "error", "boolean", "rawResponse", "pivot", "gchart", "raw", "gmaps", "kml"]
+    outputPlugins: ["table", "grouped", "error", "boolean", "rawResponse", "pivot", "gchart", "raw", "gmaps", "kml"]
     persistency: {
       outputSelector: if $stateParams.outputType then false else "visu"
       results:false

@@ -10,13 +10,14 @@
     "ngstorage": "latest",
     "yasqe": "YASGUI/YASQE",
     "yasr": "YASGUI/YASR",
-    "raw": "densitydesign/raw"
+    "raw": "densitydesign/raw",
+    "ngInfiniteScroll": "latest"
   },
   "devDependencies": {
     "angular-mocks": "latest"
   },
   "overrides": {
-   "semantic-ui": {
+    "semantic-ui": {
       "main": [
         "src/semantic.less",
         "dist/semantic.js",
