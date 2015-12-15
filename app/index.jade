@@ -5,7 +5,9 @@ html(lang="en",ng-app="app")
     meta(name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width")
     // build:css(app) styles/vendor.css
     // bower:css
-    link(rel='stylesheet', href='bower_components/semantic/dist/semantic.css')
+    link(rel='stylesheet', href='bower_components/semantic-ui/dist/semantic.css')
+    link(rel='stylesheet', href='bower_components/yasgui-yasqe/dist/yasqe.css')
+    link(rel='stylesheet', href='bower_components/yasgui-yasr/dist/yasr.css')
     link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='bower_components/bootstrap-colorpicker/css/colorpicker.css')
     link(rel='stylesheet', href='bower_components/codemirror/lib/codemirror.css')
@@ -14,8 +16,6 @@ html(lang="en",ng-app="app")
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic|Lato:400,700,900|Open+Sans:400,300,600,700,800|Roboto+Slab:400,300,100,700|Roboto:400,100,300,500,700,900&subset=latin,latin-ext')
     link(href='http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css', rel='stylesheet')
     link(rel='stylesheet', href='bower_components/raw/css/raw.css')
-    link(href="bower_components/yasqe/dist/yasqe.css" rel="stylesheet")
-    link(href="bower_components/yasr/dist/yasr.css" rel="stylesheet")
     // endbuild
 
     // build:css(.tmp) styles/main.css
@@ -31,16 +31,15 @@ html(lang="en",ng-app="app")
     script(type="text/javascript").
         google.load('visualization', '1.0', {'packages':['corechart','annotationchart','calendar','gauge','geochart','map','orgchart','sankey','table','timeline','treemap','charteditor']});
     // build:js(app) scripts/vendor.js
-    script(src='bower_components/jquery/dist/jquery.js')
     // bower:js
-    script(src='bower_components/angular/angular.js')
     script(src='bower_components/jquery/dist/jquery.js')
+    script(src='bower_components/angular/angular.js')
     script(src='bower_components/angular-ui-router/release/angular-ui-router.js')
     script(src='bower_components/angular-animate/angular-animate.js')
-    script(src='bower_components/semantic/dist/semantic.js')
+    script(src='bower_components/semantic-ui/dist/semantic.js')
     script(src='bower_components/ngstorage/ngStorage.js')
-    script(src='bower_components/yasqe/dist/yasqe.bundled.min.js')
-    script(src='bower_components/yasr/dist/yasr.bundled.min.js')
+    script(src='bower_components/yasgui-yasqe/dist/yasqe.bundled.js')
+    script(src='bower_components/yasgui-yasr/dist/yasr.bundled.js')
     script(src='bower_components/d3/d3.js')
     script(src='bower_components/bootstrap/dist/js/bootstrap.js')
     script(src='bower_components/angular-route/angular-route.js')
