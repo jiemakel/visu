@@ -21,6 +21,9 @@ angular.module("app").controller("MainCtrl", ($window,$location,$http,$scope,$lo
       showQueryButton: true
       endpoint : $scope.sparqlEndpoint
       query : ''
+      callbacks:
+        beforeSend: (xhr,options) !->
+          if ($http.defaults.headers.common['Authorization']) then xhr.setRequestHeader('Authorization',$http.defaults.headers.common['Authorization'])
   )
   if $stateParams.query? then yasqe.setValue($stateParams.query)
   $scope.sparqlEndpointInputValid = true
